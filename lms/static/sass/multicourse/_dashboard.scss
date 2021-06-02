@@ -956,7 +956,7 @@
         margin: 0;
       }
 
-      &.course-status-processing {
+      &.course-status-processing, &.course-status-certavailable {
         color: #0d7d4d;
       }
 
