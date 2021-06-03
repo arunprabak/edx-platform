@@ -45,12 +45,8 @@ jobs:
         pip install setuptools wheel
         pip install -r requirements/edx/base.txt
 
-    - name: Remove Phantom JS
-      run: sudo rm -rf /usr/local/bin/phantomjs
-
     - name: Run JS Tests
       env:
-        FIREFOX_BIN: /usr/bin/firefox
         TEST_SUITE: js-unit
         SCRIPT_TO_RUN: ./scripts/generic-ci-tests.sh
       run: xvfb-run --auto-servernum ./scripts/all-tests.sh
