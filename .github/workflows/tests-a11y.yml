@@ -59,6 +59,13 @@ jobs:
         sudo /etc/init.d/mysql start
         mysql -e 'CREATE DATABASE ${{ env.DB_DATABASE }};' -u${{ env.DB_USER }} -p${{ env.DB_PASSWORD }}
 
+    - name: Reset mysql password
+      run: |
+        cat <<EOF | mysql -h 127.0.0.1 -u root --password=password
+          UPDATE mysql.user SET authentication_string = null WHERE user = 'root';
+          FLUSH PRIVILEGES;
+        EOF
+
     - name: Run Tests
       env:
         TEST_SUITE: a11y
