@@ -61,7 +61,7 @@ jobs:
 
     - name: Reset mysql password
       run: |
-        cat <<EOF | mysql -h 127.0.0.1 -u root --password=password
+        cat <<EOF | mysql -h 127.0.0.1 -u root --password=root
           UPDATE mysql.user SET authentication_string = null WHERE user = 'root';
           FLUSH PRIVILEGES;
         EOF
@@ -71,5 +71,7 @@ jobs:
         TEST_SUITE: a11y
         DB_DATABASE: edxtest
         DB_USER: root
-        DB_PASSWORD: root
-      run: ./scripts/accessibility-tests.sh
+        DB_PASSWORD: ''
+      run: |
+        sudo service mysql restart
+        ./scripts/accessibility-tests.sh
