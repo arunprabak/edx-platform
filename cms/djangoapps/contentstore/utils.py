@@ -189,7 +189,7 @@ def get_proctored_exam_settings_url(course_module) -> str:
         course_authoring_microfrontend_url = get_course_authoring_url(course_module)
         if course_authoring_microfrontend_url:
             mfe_proctored_exam_settings_url = f'{course_authoring_microfrontend_url}/course/{course_module.id}' \
-                                          f'/proctored-exam-settings'
+                                                f'/proctored-exam-settings'
     return mfe_proctored_exam_settings_url
 
 
