@@ -3,7 +3,7 @@ Support tool for changing course enrollments.
 """
 
 from django.contrib.auth.models import User  # lint-amnesty, pylint: disable=imported-auth-user
-from django.db import transaction, IntegrityError
+from django.db import transaction
 from django.db.models import Q
 from django.http import HttpResponseBadRequest
 from django.urls import reverse
