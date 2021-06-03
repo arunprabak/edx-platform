@@ -34,5 +34,5 @@ def checklists_handler(request, course_key_string=None):
     return render_to_response('checklists.html', {
         'language_code': request.LANGUAGE_CODE,
         'context_course': course_module,
-        'proctored_exam_settings_url': proctored_exam_settings_url,
+        'mfe_proctored_exam_settings_url': mfe_proctored_exam_settings_url,
     })
