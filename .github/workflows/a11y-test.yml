@@ -15,7 +15,7 @@ jobs:
       matrix:
         python-version: ['3.8']
 
-    name: a11y Test-Python ${{ matrix.python-version }}
+    name: Python ${{ matrix.python-version }} sample
     steps:
     - uses: actions/checkout@v2
 
@@ -66,5 +66,5 @@ jobs:
         DB_USER: root
         DB_PASSWORD: ''
       run: |
-        sudo service mysql restart
+#        sudo service mysql restart
         ./scripts/accessibility-tests.sh
