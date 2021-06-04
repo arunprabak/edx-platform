@@ -234,7 +234,7 @@ class OutlineTabView(RetrieveAPIView):
 
             offer_data = generate_offer_data(request.user, course_overview)
             access_expiration = get_access_expiration_data(request.user, course_overview)
-            cert_data = get_cert_data(request.user, course, enrollment.mode)
+            cert_data = get_cert_data(request.user, course, enrollment.mode) if is_enrolled else None
 
             # Only show the set course goal message for enrolled, unverified
             # users in a course that allows for verified statuses.
