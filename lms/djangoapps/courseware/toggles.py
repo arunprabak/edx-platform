@@ -15,9 +15,11 @@ WAFFLE_FLAG_NAMESPACE = LegacyWaffleFlagNamespace(name='courseware')
 # .. toggle_name: courseware.use_legacy_frontend
 # .. toggle_implementation: CourseWaffleFlag
 # .. toggle_default: False
-# .. toggle_description: Waffle flag to direct @@TODO
+# .. toggle_description: Waffle flag to direct learners to the legacy courseware experience - the default behavior
+#   directs to the new MFE-based courseware in frontend-app-learning. Supports the ability to globally flip back to
+#   the legacy courseware experience.
 # .. toggle_use_cases: temporary, open_edx
-# .. toggle_creation_date: 2020-01-29
+# .. toggle_creation_date: 2021-06-03
 # .. toggle_target_removal_date: 2021-10-09
 # .. toggle_tickets: DEPR-109
 COURSEWARE_USE_LEGACY_FRONTEND = CourseWaffleFlag(
