@@ -48,7 +48,9 @@ PROCTORING_BACKENDS = {
     'mock_proctoring_without_rules': {},
 }
 
-FEATURES = {}
+FEATURES = {
+    'ENABLE_CSMH_EXTENDED': True,
+}
 
 INSTALLED_APPS = (
     'django.contrib.auth',
