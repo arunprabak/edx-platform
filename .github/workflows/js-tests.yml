@@ -52,3 +52,14 @@ jobs:
       run: |
         npm install -g jest
         xvfb-run --auto-servernum ./scripts/all-tests.sh
+
+    - name: Save Job Artifacts
+      uses: actions/upload-artifact@v2
+      with:
+        name: Build-Artifacts
+        path: |
+          reports/**/*
+          test_root/log/*.png
+          test_root/log/*.log
+          **/nosetests.xml
+          **/TEST-*.xml
