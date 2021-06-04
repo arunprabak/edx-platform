@@ -15,7 +15,7 @@ jobs:
       matrix:
         python-version: ['3.8']
 
-    name: Python ${{ matrix.python-version }} a11y Test
+    name: a11y Test-Python ${{ matrix.python-version }}
     steps:
     - uses: actions/checkout@v2
 
