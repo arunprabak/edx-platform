@@ -9,13 +9,14 @@ from django.core.exceptions import ObjectDoesNotExist
 from django.utils.translation import ugettext as _
 from opaque_keys import InvalidKeyError
 from opaque_keys.edx.keys import CourseKey, UsageKey
+from xblock.completable import XBlockCompletionMode
 
 import lms.djangoapps.instructor.enrollment as enrollment
 from common.djangoapps.student import auth
+from common.djangoapps.student.models import get_user_by_username_or_email
 from common.djangoapps.student.roles import CourseStaffRole
 from lms.djangoapps.commerce.utils import create_zendesk_ticket
 from lms.djangoapps.courseware.models import StudentModule
-from lms.djangoapps.instructor.views.tools import get_student_from_identifier
 from xmodule.modulestore.django import modulestore
 
 log = logging.getLogger(__name__)
@@ -44,15 +45,12 @@ class InstructorService:
         course_id = CourseKey.from_string(course_id)
 
         try:
-            student = get_student_from_identifier(student_identifier)
+            student = get_user_by_username_or_email(student_identifier)
         except ObjectDoesNotExist:
             err_msg = (
                 'Error occurred while attempting to reset student attempts for user '
-                '{student_identifier} for content_id {content_id}. '
-                'User does not exist!'.format(
-                    student_identifier=student_identifier,
-                    content_id=content_id
-                )
+                f'{student_identifier} for content_id {content_id}. '
+                'User does not exist!'
             )
             log.error(err_msg)
             return
@@ -78,12 +76,59 @@ class InstructorService:
             except (StudentModule.DoesNotExist, enrollment.sub_api.SubmissionError):
                 err_msg = (
                     'Error occurred while attempting to reset student attempts for user '
-                    '{student_identifier} for content_id {content_id}.'.format(
-                        student_identifier=student_identifier,
-                        content_id=content_id
-                    )
+                    f'{student_identifier} for content_id {content_id}.'
                 )
                 log.error(err_msg)
+
+    def complete_student_attempt(self, user_identifier, content_id):
+        """
+        """
+        try:
+            user = get_user_by_username_or_email(user_identifier)
+        except ObjectDoesNotExist:
+            err_msg = (
+                'Error occurred while attempting to complete student attempt for user '
+                f'{user_identifier} for content_id {content_id}. '
+                'User does not exist!'
+            )
+            log.error(err_msg)
+            return
+
+        try:
+            block_key = UsageKey.from_string(content_id)
+        except InvalidKeyError:
+            err_msg = (
+                'Error occurred while attempting to complete student attempts for user '
+                f'{user_identifier} for content_id {content_id}. '
+                'Invalid content_id!'
+            )
+            log.error(err_msg)
+            return
+
+        def _submit_completions(block, user):
+            """
+            """
+            mode = XBlockCompletionMode.get_mode(block)
+            if mode == XBlockCompletionMode.COMPLETABLE:
+                block.runtime.publish(block, 'completion', {'completion': 1.0, 'user_id': user.id})
+            elif mode == XBlockCompletionMode.AGGREGATOR:
+                block_children = ((hasattr(block, 'get_child_descriptors') and block.get_child_descriptors())
+                                 or (hasattr(block, 'get_children') and block.get_children()))
+                for child in block_children:
+                    _submit_completions(child, user)
+
+        try:
+            root_block = modulestore().get_item(block_key)
+        except ItemNotFoundError:
+            err_msg = (
+                'Error occurred while attempting to complete student attempts for user '
+                f'{user_identifier} for content_id {content_id}. '
+                'Block not found in the modulestore!'
+            )
+            log.error(err_msg)
+            return
+
+        _submit_completions(root_block, user)
 
     def is_course_staff(self, user, course_id):
         """
