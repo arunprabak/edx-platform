@@ -8,6 +8,7 @@ from unittest import skipIf
 from unittest.mock import patch
 
 from edx_toggles.toggles.testutils import override_waffle_flag
+from pytest import mark
 
 from common.test.acceptance.fixtures.course import CourseFixture, XBlockFixtureDesc
 from common.test.acceptance.pages.common.auto_auth import AutoAuthPage
@@ -234,6 +235,7 @@ class LMSVideoBlockA11yTest(VideoBaseTest):
         with patch.dict(os.environ, {'SELENIUM_BROWSER': browser}):
             super().setUp()
 
+    @mark.django_db
     def test_video_player_a11y(self):
         # load transcripts so we can test skipping to
         self.assets.extend(['english_single_transcript.srt', 'subs_3_yD_cEKoCk.srt.sjson'])

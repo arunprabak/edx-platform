@@ -7,6 +7,7 @@ progress page.
 from contextlib import contextmanager
 
 from edx_toggles.toggles.testutils import override_waffle_flag
+from pytest import mark
 
 from lms.djangoapps.courseware.toggles import COURSEWARE_USE_LEGACY_FRONTEND
 
@@ -168,6 +169,7 @@ class SubsectionGradingPolicyA11yTest(SubsectionGradingPolicyBase):
     """
     a11y = True
 
+    @mark.django_db
     def test_axis_a11y(self):
         """
         Tests that the progress chart axes have appropriate a11y (screenreader) markup.
@@ -264,6 +266,7 @@ class ProgressPageA11yTest(ProgressPageBaseTest):
     """
     a11y = True
 
+    @mark.django_db
     def test_progress_page_a11y(self):
         """
         Test the accessibility of the progress page.
