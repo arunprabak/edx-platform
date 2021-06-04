@@ -52,6 +52,7 @@ jobs:
       run: |
         npm install -g jest
         xvfb-run --auto-servernum ./scripts/all-tests.sh
+      continue-on-error: true
 
     - name: Save Job Artifacts
       uses: actions/upload-artifact@v2
