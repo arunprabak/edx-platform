@@ -7,7 +7,6 @@ import logging
 from urllib.parse import urlencode
 
 from django.conf import settings
-from django.utils.timezone import now
 
 from openedx.core.djangoapps.site_configuration import helpers as configuration_helpers
 
