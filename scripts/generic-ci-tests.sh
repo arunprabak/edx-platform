@@ -151,7 +151,10 @@ case "$TEST_SUITE" in
 
     "js-unit")
         $TOX paver test_js --coverage
-        $TOX paver diff_coverage
+        if [ ! "$TEST_SERVICE" != "gh-actions" ]
+        then
+            $TOX paver diff_coverage
+        fi
         ;;
 
     "commonlib-js-unit")
