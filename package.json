@@ -84,7 +84,6 @@
     "jasmine-core": "2.6.4",
     "jasmine-jquery": "git+https://github.com/velesin/jasmine-jquery.git#ebad463d592d3fea00c69f26ea18a930e09c7b58",
     "jest": "23.1.0",
-    "jest-cli": "^24.7.1",
     "jest-enzyme": "6.0.2",
     "karma": "0.13.22",
     "karma-chrome-launcher": "0.2.3",
