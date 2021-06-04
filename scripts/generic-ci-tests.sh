@@ -151,7 +151,7 @@ case "$TEST_SUITE" in
 
     "js-unit")
         $TOX paver test_js --coverage
-        if [ ! "$TEST_SERVICE" != "gh-actions" ]
+        if [ "$TEST_SERVICE" != "gh-actions" ]
         then
             $TOX paver diff_coverage
         fi
