@@ -71,16 +71,3 @@ def has_certificates_enabled(course):
     if not settings.FEATURES.get('CERTIFICATES_HTML_VIEW', False):
         return False
     return course.cert_html_view_enabled
-
-
-def should_display_grade(course_overview):
-    """
-    Returns True or False depending upon either certificate available date
-    or course end date
-    """
-    cert_available_date = course_overview.certificate_available_date
-    current_date = now().replace(hour=0, minute=0, second=0, microsecond=0)
-    if cert_available_date:
-        return cert_available_date < current_date
-
-    return course_overview.end and course_overview.end < current_date
