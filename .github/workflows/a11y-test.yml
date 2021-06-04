@@ -10,13 +10,12 @@ on:
 
 jobs:
   run_tests:
-    name: a11y Test
     runs-on: ubuntu-latest
     strategy:
       matrix:
         python-version: ['3.8']
 
-    - name: Python ${{ matrix.python-version }}
+    name: Python ${{ matrix.python-version }} a11y Test
     steps:
     - uses: actions/checkout@v2
 
