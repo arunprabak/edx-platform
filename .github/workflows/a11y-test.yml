@@ -66,5 +66,5 @@ jobs:
         DB_USER: root
         DB_PASSWORD: ''
       run: |
-#        sudo service mysql restart
+        sudo service mysql restart
         ./scripts/accessibility-tests.sh
