@@ -767,5 +767,5 @@ def get_enrolled_allowlisted_not_passing_users(course_key):
     users = get_enrolled_allowlisted_users(course_key)
     return users.exclude(
         generatedcertificate__course_id=course_key,
-        generatedcertificate__status__in=CertificateStatuses.PASSED_STATUSES
+        generatedcertificate__status__in=CertificateStatuses.passed_statuses
     )

@@ -53,7 +53,7 @@ def completion_check(user):
     """
     from lms.djangoapps.certificates.data import CertificateStatuses
     config = CourseEventBadgesConfiguration.current().completed_settings
-    certificates = user.generatedcertificate_set.filter(status__in=CertificateStatuses.PASSED_STATUSES).count()
+    certificates = user.generatedcertificate_set.filter(status__in=CertificateStatuses.passed_statuses).count()
     award_badge(config, certificates, user)
 
 
@@ -68,7 +68,7 @@ def course_group_check(user, course_key):
     for slug, keys in config.items():
         if course_key in keys:
             certs = user.generatedcertificate_set.filter(
-                status__in=CertificateStatuses.PASSED_STATUSES,
+                status__in=CertificateStatuses.passed_statuses,
                 course_id__in=keys,
             )
             if len(certs) == len(keys):
